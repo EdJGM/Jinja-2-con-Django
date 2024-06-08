@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %} Exportar Productos {% endblock %}
+
+{% block content %}
+    <h1 class="text-center mb-4">Exportar Productos a CSV</h1>
+    <div class="container">
+        <a href="{% url 'exportar_productos_csv' %}" class="btn btn-success">Exportar CSV</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %} Listar Productos {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: black;">Listar Productos</h1>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>
+                        <a href="{% url 'editar_producto' producto.id %}" class="btn btn-sm btn-outline-warning">Editar</a>
+                        <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center mt-4">
+        <div class="btn-group" role="group" aria-label="Botones de acción">
+            <a href="{% url 'crear_producto' %}" class="btn btn-success">Agregar Producto</a>
+            <a href="{% url 'exportar_productos_csv' %}" class="btn btn-primary">Exportar CSV</a>
+        </div>
+        <form method="post" enctype="multipart/form-data" action="{% url 'importar_productos_csv' %}" class="mt-2">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="file" name="archivo_csv" accept=".csv" class="form-control" required>
+                <button type="submit" class="btn btn-primary">Importar CSV</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
